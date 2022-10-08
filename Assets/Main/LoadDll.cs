@@ -79,7 +79,8 @@ public class LoadDll : MonoBehaviour
         var gameAss = AppDomain.CurrentDomain.GetAssemblies().First(assembly => assembly.GetName().Name == "Assembly-CSharp");
 #endif
 
-        AssetBundle prefabAb = AssetBundle.LoadFromMemory(GetAbBytes("prefabs"));
-        GameObject testPrefab = Instantiate(prefabAb.LoadAsset<GameObject>("HotUpdatePrefab.prefab"));
+        var hotFixMain = gameAss.GetType("HotfixMain2");
+        var method = hotFixMain.GetMethod("Start");
+        method?.Invoke(null,new[] { GetAbBytes("prefabs") });
     }
 }
